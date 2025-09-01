@@ -65,6 +65,12 @@ public partial class ThemDaiLyWindowViewModel : BaseViewModel
     [ObservableProperty]
     private Quan? selectedQuan;
 
+    [ObservableProperty]
+    private int soLuongDaiLyHienCo = 0;
+
+    [ObservableProperty]
+    private int soLuongDaiLyToiDa = 0;
+
     private async Task LoadDataAsync()
     {
         Title = "Tiếp nhận đại lý";
@@ -90,7 +96,13 @@ public partial class ThemDaiLyWindowViewModel : BaseViewModel
                 SelectedLoaiDaiLy = LoaiDaiLies[0];
             
             if (Quans.Any())
+            {
                 SelectedQuan = Quans[0];
+                await UpdateDaiLyCountsForSelectedQuan();
+            }
+
+            // Load SoLuongDaiLyToiDa from ThamSo
+            await LoadSoLuongDaiLyToiDa();
         }
         catch (Exception ex)
         {
@@ -100,6 +112,55 @@ public partial class ThemDaiLyWindowViewModel : BaseViewModel
         {
             IsLoading = false;
         }
+    }
+
+    private async Task LoadSoLuongDaiLyToiDa()
+    {
+        try
+        {
+            var soLuongToiDaStr = await thamSoService.GetThamSo("SoLuongDaiLyToiDa");
+            
+            if (!string.IsNullOrEmpty(soLuongToiDaStr) && int.TryParse(soLuongToiDaStr, out int soLuongToiDa))
+            {
+                SoLuongDaiLyToiDa = soLuongToiDa;
+            }
+            else
+            {
+                SoLuongDaiLyToiDa = 50; // Default value
+            }
+        }
+        catch (Exception ex)
+        {
+            await AlertUtil.ShowErrorAlert($"Lỗi khi tải số lượng đại lý tối đa: {ex.Message}");
+            SoLuongDaiLyToiDa = 50; // Default value
+        }
+    }
+
+    private async Task UpdateDaiLyCountsForSelectedQuan()
+    {
+        if (SelectedQuan != null)
+        {
+            try
+            {
+                var allDaiLies = await daiLyService.GetAllDaiLiesAsync();
+                SoLuongDaiLyHienCo = allDaiLies.Count(dl => dl.MaQuan == SelectedQuan.MaQuan);
+            }
+            catch (Exception ex)
+            {
+                await AlertUtil.ShowErrorAlert($"Lỗi khi đếm số lượng đại lý: {ex.Message}");
+                SoLuongDaiLyHienCo = 0;
+            }
+        }
+        else
+        {
+            SoLuongDaiLyHienCo = 0;
+        }
+    }
+
+    // This method should be called when the selected Quan changes
+    partial void OnSelectedQuanChanged(Quan? value)
+    {
+        _ = UpdateDaiLyCountsForSelectedQuan();
     }
 
     [RelayCommand]
@@ -126,6 +187,9 @@ public partial class ThemDaiLyWindowViewModel : BaseViewModel
             await daiLyService.AddDaiLyAsync(newDaiLy);
 
             await AlertUtil.ShowSuccessAlert("Thêm đại lý thành công!");
+            
+            // Close popup after adding successfully
+            await CloseWindow();
         }
         catch (Exception ex)
         {
@@ -150,7 +214,10 @@ public partial class ThemDaiLyWindowViewModel : BaseViewModel
             SelectedLoaiDaiLy = LoaiDaiLies[0];
         
         if (Quans.Any())
+        {
             SelectedQuan = Quans[0];
+            await UpdateDaiLyCountsForSelectedQuan();
+        }
 
         try
         {
@@ -207,6 +274,13 @@ public partial class ThemDaiLyWindowViewModel : BaseViewModel
         if (SelectedQuan == null)
         {
             await AlertUtil.ShowErrorAlert("Vui lòng chọn quận");
+            return false;
+        }
+
+        // Check if adding this agency would exceed the maximum limit
+        if (SoLuongDaiLyHienCo >= SoLuongDaiLyToiDa)
+        {
+            await AlertUtil.ShowErrorAlert($"Không thể thêm đại lý. Quận {SelectedQuan.TenQuan} đã đạt số lượng tối đa ({SoLuongDaiLyToiDa} đại lý)");
             return false;
         }
 

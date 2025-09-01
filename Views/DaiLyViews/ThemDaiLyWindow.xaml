@@ -57,6 +57,7 @@
                     FontSize="16"
                     HeightRequest="40"
                     Text="✕"
+                    TextColor="White"
                     VerticalOptions="Center"
                     WidthRequest="40" />
             </Grid>
@@ -68,9 +69,10 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <!--  Line 1  -->
+                    <!--  Line 1: Mã Đại lý, Quận, Số lượng Đại lý hiện có trong Quận, Ngày tiếp nhận  -->
                     <Grid
                         Grid.Row="0"
                         Margin="0,10"
@@ -92,66 +94,26 @@
                                 Text="{Binding MaDaiLy}" />
                         </VerticalStackLayout>
 
-                        <!--  Tên đại lý  -->
+                        <!--  Quận  -->
                         <VerticalStackLayout Grid.Column="1" Spacing="5">
-                            <Label FontAttributes="Bold" Text="Tên đại lý" />
-                            <Entry Placeholder="Nhập tên đại lý" Text="{Binding TenDaiLy}" />
-                        </VerticalStackLayout>
-
-                        <!--  Tên loại đại lý  -->
-                        <VerticalStackLayout Grid.Column="2" Spacing="5">
-                            <Label FontAttributes="Bold" Text="Loại đại lý" />
-                            <Picker
-                                ItemDisplayBinding="{Binding TenLoaiDaiLy}"
-                                ItemsSource="{Binding LoaiDaiLies}"
-                                SelectedItem="{Binding SelectedLoaiDaiLy}" />
-                        </VerticalStackLayout>
-
-                        <!--  Tên quận  -->
-                        <VerticalStackLayout Grid.Column="3" Spacing="5">
                             <Label FontAttributes="Bold" Text="Quận" />
                             <Picker
                                 ItemDisplayBinding="{Binding TenQuan}"
                                 ItemsSource="{Binding Quans}"
                                 SelectedItem="{Binding SelectedQuan}" />
                         </VerticalStackLayout>
-                    </Grid>
 
-                    <!--  Line 2  -->
-                    <Grid
-                        Grid.Row="1"
-                        Margin="0,10"
-                        ColumnSpacing="15"
-                        RowSpacing="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <!--  Số điện thoại  -->
-                        <VerticalStackLayout Grid.Column="0" Spacing="5">
-                            <Label FontAttributes="Bold" Text="Số điện thoại" />
+                        <!--  Số lượng Đại lý hiện có trong Quận  -->
+                        <VerticalStackLayout Grid.Column="2" Spacing="5">
+                            <Label FontAttributes="Bold" Text="SL Đại lý hiện có" />
                             <Entry
-                                Keyboard="Telephone"
-                                Placeholder="Nhập số điện thoại"
-                                Text="{Binding SoDienThoai}" />
-                        </VerticalStackLayout>
-
-                        <!--  Email  -->
-                        <VerticalStackLayout Grid.Column="1" Spacing="5">
-                            <Label FontAttributes="Bold" Text="Email" />
-                            <Entry
-                                Keyboard="Email"
-                                Placeholder="Nhập email"
-                                Text="{Binding Email}" />
+                                BackgroundColor="LightGray"
+                                IsReadOnly="True"
+                                Text="{Binding SoLuongDaiLyHienCo}" />
                         </VerticalStackLayout>
 
                         <!--  Ngày tiếp nhận  -->
-                        <Grid
-                            Grid.Column="2"
-                            HorizontalOptions="Fill"
-                            RowSpacing="5">
+                        <Grid Grid.Column="3" RowSpacing="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
@@ -162,23 +124,85 @@
                                 Text="Ngày tiếp nhận" />
                             <DatePicker
                                 Grid.Row="1"
-                                Margin="0"
                                 Date="{Binding NgayTiepNhan}"
-                                HorizontalOptions="Fill"
-                                VerticalOptions="Fill" />
+                                HorizontalOptions="Fill" />
                         </Grid>
                     </Grid>
 
-                    <!--  Line 3 - Địa chỉ  -->
-                    <VerticalStackLayout
+                    <!--  Line 2: Tên Đại Lý, Quy định Số lượng Đại lý tối đa trong Quận  -->
+                    <Grid
+                        Grid.Row="1"
+                        Margin="0,10"
+                        ColumnSpacing="15"
+                        RowSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Tên đại lý  -->
+                        <VerticalStackLayout Grid.Column="0" Spacing="5">
+                            <Label FontAttributes="Bold" Text="Tên đại lý" />
+                            <Entry Placeholder="Nhập tên đại lý" Text="{Binding TenDaiLy}" />
+                        </VerticalStackLayout>
+
+                        <!--  Quy định Số lượng Đại lý tối đa trong Quận  -->
+                        <VerticalStackLayout Grid.Column="1" Spacing="5">
+                            <Label FontAttributes="Bold" Text="SL Đại lý tối đa" />
+                            <Entry
+                                BackgroundColor="LightGray"
+                                IsReadOnly="True"
+                                Text="{Binding SoLuongDaiLyToiDa}" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!--  Line 3: Loại Đại lý, Số điện thoại, Email  -->
+                    <Grid
                         Grid.Row="2"
+                        Margin="0,10"
+                        ColumnSpacing="15"
+                        RowSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Loại đại lý  -->
+                        <VerticalStackLayout Grid.Column="0" Spacing="5">
+                            <Label FontAttributes="Bold" Text="Loại đại lý" />
+                            <Picker
+                                ItemDisplayBinding="{Binding TenLoaiDaiLy}"
+                                ItemsSource="{Binding LoaiDaiLies}"
+                                SelectedItem="{Binding SelectedLoaiDaiLy}" />
+                        </VerticalStackLayout>
+
+                        <!--  Số điện thoại  -->
+                        <VerticalStackLayout Grid.Column="1" Spacing="5">
+                            <Label FontAttributes="Bold" Text="Số điện thoại" />
+                            <Entry
+                                Keyboard="Telephone"
+                                Placeholder="Nhập số điện thoại"
+                                Text="{Binding SoDienThoai}" />
+                        </VerticalStackLayout>
+
+                        <!--  Email  -->
+                        <VerticalStackLayout Grid.Column="2" Spacing="5">
+                            <Label FontAttributes="Bold" Text="Email" />
+                            <Entry
+                                Keyboard="Email"
+                                Placeholder="Nhập email"
+                                Text="{Binding Email}" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!--  Line 4: Địa chỉ  -->
+                    <VerticalStackLayout
+                        Grid.Row="3"
                         Margin="0,10"
                         Spacing="5">
                         <Label FontAttributes="Bold" Text="Địa chỉ" />
-                        <Editor
-                            HeightRequest="80"
-                            Placeholder="Nhập địa chỉ"
-                            Text="{Binding DiaChi}" />
+                        <Editor Placeholder="Nhập địa chỉ" Text="{Binding DiaChi}" />
                     </VerticalStackLayout>
                 </Grid>
             </ScrollView>
