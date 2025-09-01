@@ -20,7 +20,7 @@
 
             <HorizontalStackLayout Grid.Column="0" Spacing="10">
                 <Button Command="{Binding ClickButtonCommand}" Text="Tra cuu Dai Ly" />
-                <Button Command="{Binding ClickButtonCommand}" Text="Load" />
+                <Button Command="{Binding LoadCommandCommand}" Text="Load" />
             </HorizontalStackLayout>
 
             <HorizontalStackLayout
@@ -101,7 +101,7 @@
         </Grid>
 
         <!--  Table Data  -->
-        <Grid>
+        <Grid IsVisible="{Binding IsNotLoading}}}">
             <CollectionView ItemsSource="{Binding DsDaiLy}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:DaiLy">
@@ -158,6 +158,15 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
+
+        <ActivityIndicator
+            HeightRequest="50"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsLoading}"
+            IsVisible="{Binding IsLoading}"
+            VerticalOptions="Center"
+            WidthRequest="50"
+            Color="Blue" />
 
     </VerticalStackLayout>
 </ContentPage>

@@ -16,6 +16,9 @@ public class DaiLyRepository : IDaiLyRepository
 
     public async Task<IEnumerable<DaiLy>> GetAllDaiLiesAsync()
     {
+        // Giả lập thời gian load lâu
+        await Task.Delay(5000);
+
         return await _dataContext.DaiLies
             .Include(dl => dl.Quan)
             .Include(dl => dl.LoaiDaiLy)
