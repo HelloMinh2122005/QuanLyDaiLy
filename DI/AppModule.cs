@@ -3,6 +3,8 @@ using QuanLyDaiLy.Configs;
 using QuanLyDaiLy.Data;
 using QuanLyDaiLy.ServiceImpls;
 using QuanLyDaiLy.Services;
+using QuanLyDaiLy.ViewModels.DaiLyViewModels;
+using QuanLyDaiLy.Views.DaiLyViews;
 
 namespace QuanLyDaiLy.DI;
 
@@ -23,6 +25,12 @@ public static class AppModule
 
         // Đăng ký các service khác ở đây
         services.AddScoped<DatabaseService, DatabaseServiceImpl>();
+
+        // Đăng ký Views 
+        services.AddTransient<DanhSachDaiLyPage>();
+
+        // Đăng ký ViewModels
+        services.AddTransient<DanhSachDaiLyPageViewModel>();
 
         return services;
     }
