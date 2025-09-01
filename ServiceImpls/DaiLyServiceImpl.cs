@@ -17,4 +17,14 @@ public class DaiLyServiceImpl : IDaiLyService
     {
         return await daiLyRepository.GetAllDaiLiesAsync();
     }
+
+    public async Task<int> AddDaiLyAsync(DaiLy newDaiLy)
+    {
+        return await daiLyRepository.AddDaiLyAsync(newDaiLy);
+    }
+
+    public async Task<int> GetNextAvailableIdAsync()
+    {
+        return await daiLyRepository.GetNextAvailableIdAsync();
+    }
 }

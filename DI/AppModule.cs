@@ -28,9 +28,15 @@ public static class AppModule
         // Đăng ký các service khác ở đây
         services.AddScoped<DatabaseService, DatabaseServiceImpl>();
         services.AddScoped<IDaiLyService, DaiLyServiceImpl>();
+        services.AddScoped<ILoaiDaiLyService, LoaiDaiLyServiceImpl>();
+        services.AddScoped<IQuanService, QuanServiceImpl>();
+        services.AddScoped<IThamSoService, ThamSoServiceImpl>();
 
         // Đăng ký Repository
         services.AddScoped<IDaiLyRepository, DaiLyRepository>();
+        services.AddScoped<ILoaiDaiLyRepository, LoaiDaiLyRepository>();
+        services.AddScoped<IQuanRepository, QuanRepository>();
+        services.AddScoped<IThamSoRepository, ThamSoRepository>();
 
         // Đăng ký Views 
         services.AddTransient<DanhSachDaiLyPage>();
@@ -43,7 +49,3 @@ public static class AppModule
         return services;
     }
 }
-
-// Singleton: Tao 1 lan, dung ca app 
-// Transient: Can thi moi tao 
-// Scoped: Tuong tu nhu Singleton, nhung chi tao 1 lan trong 1 scope (1 request)

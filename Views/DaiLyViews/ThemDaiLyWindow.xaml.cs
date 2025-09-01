@@ -9,5 +9,8 @@ public partial class ThemDaiLyWindow : Popup
     {
         InitializeComponent();
         BindingContext = vm;
+        
+        // Pass the popup reference to the ViewModel so it can close itself
+        vm.SetPopupReference(this);
     }
 }
