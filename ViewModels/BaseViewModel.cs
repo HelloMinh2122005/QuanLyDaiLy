@@ -12,13 +12,4 @@ public partial class BaseViewModel : ObservableObject
 
     [ObservableProperty]
     private string title = string.Empty;
-
-    [ObservableProperty]
-    private bool isBusy = false;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsNotBusy))]
-    private bool isRefreshing = false;
-
-    public bool IsNotBusy => !IsBusy;
 }

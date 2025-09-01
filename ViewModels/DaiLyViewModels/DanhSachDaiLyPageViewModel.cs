@@ -1,7 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using QuanLyDaiLy.Models;
 using QuanLyDaiLy.Services;
+using QuanLyDaiLy.Views.DaiLyViews;
 using System.Collections.ObjectModel;
 
 namespace QuanLyDaiLy.ViewModels.DaiLyViewModels;
@@ -9,10 +11,12 @@ namespace QuanLyDaiLy.ViewModels.DaiLyViewModels;
 public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 {
     private readonly IDaiLyService daiLyService;
+    private readonly IServiceProvider serviceProvider;
 
-    public DanhSachDaiLyPageViewModel(IDaiLyService daiLyService)
+    public DanhSachDaiLyPageViewModel(IDaiLyService daiLyService, IServiceProvider serviceProvider)
     {
         this.daiLyService = daiLyService;
+        this.serviceProvider = serviceProvider;
         Title = "Danh Sách Đại Lý";
         _ = LoadDaiLies();
     }
@@ -48,6 +52,25 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
     public void LoadCommand()
     {
         _ = LoadDaiLyButton();
+    }
+
+    [RelayCommand] 
+  public async Task ThemDaiLyButton()
+    {
+        var themDaiLyViewModel = serviceProvider.GetRequiredService<ThemDaiLyWindowViewModel>();
+
+        var themDaiLyPopup = new ThemDaiLyWindow(themDaiLyViewModel);
+
+        var mainPage = Application.Current?.MainPage;
+        if (mainPage is not null)
+        {
+            var result = await mainPage.ShowPopupAsync(themDaiLyPopup);
+
+            if (result is bool success && success)
+            {
+                await LoadDaiLies();
+            }
+        }
     }
 
     private async Task LoadDaiLyButton()    

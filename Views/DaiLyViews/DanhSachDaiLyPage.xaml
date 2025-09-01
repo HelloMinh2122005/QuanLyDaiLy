@@ -28,7 +28,7 @@
                 HorizontalOptions="End"
                 Spacing="10">
                 <Button
-                    Command="{Binding ClickButtonCommand}"
+                    Command="{Binding ThemDaiLyButtonCommand}"
                     Text="Tiep nhan Dai Ly"
                     WidthRequest="137" />
                 <Button

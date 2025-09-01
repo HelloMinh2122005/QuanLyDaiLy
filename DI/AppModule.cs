@@ -34,9 +34,11 @@ public static class AppModule
 
         // Đăng ký Views 
         services.AddTransient<DanhSachDaiLyPage>();
+        services.AddTransient<ThemDaiLyWindow>();
 
         // Đăng ký ViewModels
         services.AddTransient<DanhSachDaiLyPageViewModel>();
+        services.AddTransient<ThemDaiLyWindowViewModel>();
 
         return services;
     }

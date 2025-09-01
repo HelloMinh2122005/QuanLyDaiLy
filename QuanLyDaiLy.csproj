@@ -57,6 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.8" />
@@ -72,6 +73,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Views\DaiLyViews\DanhSachDaiLyPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\DaiLyViews\ThemDaiLyWindow.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
