@@ -67,7 +67,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Interfaces\" />
-	  <Folder Include="Repositories\" />
+	  <Folder Include="Resources\Database\" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuanLyDaiLy.Configs;
 using QuanLyDaiLy.Data;
+using QuanLyDaiLy.Interfaces;
+using QuanLyDaiLy.Repositories;
 using QuanLyDaiLy.ServiceImpls;
 using QuanLyDaiLy.Services;
 using QuanLyDaiLy.ViewModels.DaiLyViewModels;
@@ -25,6 +27,10 @@ public static class AppModule
 
         // Đăng ký các service khác ở đây
         services.AddScoped<DatabaseService, DatabaseServiceImpl>();
+        services.AddScoped<IDaiLyService, DaiLyServiceImpl>();
+
+        // Đăng ký Repository
+        services.AddScoped<IDaiLyRepository, DaiLyRepository>();
 
         // Đăng ký Views 
         services.AddTransient<DanhSachDaiLyPage>();

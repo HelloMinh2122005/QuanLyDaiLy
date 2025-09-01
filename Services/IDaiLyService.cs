@@ -1,8 +1,8 @@
 ﻿using QuanLyDaiLy.Models;
 
-namespace QuanLyDaiLy.Interfaces;
+namespace QuanLyDaiLy.Services;
 
-public interface IDaiLyRepository
+public interface IDaiLyService
 {
     Task<IEnumerable<DaiLy>> GetAllDaiLiesAsync();
 }
