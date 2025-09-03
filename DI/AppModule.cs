@@ -26,7 +26,7 @@ public static class AppModule
         });
 
         // Đăng ký các service khác ở đây
-        services.AddScoped<DatabaseService, DatabaseServiceImpl>();
+        services.AddTransient<DatabaseService, DatabaseServiceImpl>();
         services.AddScoped<IDaiLyService, DaiLyServiceImpl>();
         services.AddScoped<ILoaiDaiLyService, LoaiDaiLyServiceImpl>();
         services.AddScoped<IQuanService, QuanServiceImpl>();
