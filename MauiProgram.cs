@@ -27,11 +27,8 @@ namespace QuanLyDaiLy
 
             var appBuilder = builder.Build();
 
-            _ = Task.Run(async () =>
-            {
-                using var scope = appBuilder.Services.CreateScope();
-                await scope.ServiceProvider.GetRequiredService<DatabaseService>().InitializeAsync();
-            });
+            using var scope = appBuilder.Services.CreateScope();
+            scope.ServiceProvider.GetRequiredService<DatabaseService>().InitializeAsync();
 
             return appBuilder;
         }

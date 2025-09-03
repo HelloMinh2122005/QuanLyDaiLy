@@ -1,6 +1,7 @@
 ﻿using QuanLyDaiLy.Configs;
 using QuanLyDaiLy.Models;
 using QuanLyDaiLy.Services;
+using System.Threading.Tasks;
 
 namespace QuanLyDaiLy.ServiceImpls;
 
@@ -15,8 +16,9 @@ public class DatabaseServiceImpl : DatabaseService
 
     public async Task InitializeAsync()
     {
-        await databaseConfig.Initialize();
-        await SeedData();
+        databaseConfig.Initialize();
+        _ = SeedData();
+        await Task.Delay(1000);
     }
 
     private async Task SeedData()

@@ -101,7 +101,7 @@
         </Grid>
 
         <!--  Table Data  -->
-        <Grid IsVisible="{Binding IsNotLoading}}}">
+        <Grid IsVisible="{Binding IsNotLoading}">
             <CollectionView ItemsSource="{Binding DsDaiLy}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:DaiLy">

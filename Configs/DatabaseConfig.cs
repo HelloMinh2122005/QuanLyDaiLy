@@ -30,8 +30,8 @@ public class DatabaseConfig
         return Path.Combine(databaseDirectory, $"QuanLyDaiLy.db");
     }
 
-    public async Task Initialize()
+    public void Initialize()
     {
-        await _dataContext.Database.EnsureCreatedAsync();
+        _dataContext.Database.EnsureCreated();
     }
 }
